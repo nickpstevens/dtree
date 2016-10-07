@@ -36,6 +36,7 @@ class DTree(object):
         num_examples = len(example_set)
 
         if num_examples == 0:
+            # Used to print tree structure
             #print(' |   '*depth + str(parent_default) + ' (' + str(num_examples) + ' examples)')
             return DTreeNode(None, parent_default), depth, size+1
 
@@ -46,17 +47,21 @@ class DTree(object):
         label_dist = self.label_value_distribution(example_set)
         for label in label_dist.keys():
             if label_dist[label] == num_examples:
+                # Used to print tree structure
                 #print(' |   '*depth + str(label) + ' (' + str(num_examples) + ' examples)')
                 return DTreeNode(None, label), depth, size+1
 
         # Check if the schema is empty or if there are too few examples to split on
         if self.depth_limit_reached(depth) or len(feature_set) == 0 or num_examples < self.MIN_EXAMPLES:
+            # Used to print tree structure
             #print(' |   '*depth + str(default_label) + ' (' + str(num_examples) + ' examples)')
             return DTreeNode(None, default_label), depth, size+1
 
         # Pick the current best feature for this node and recurse
         else:
             best_feature, feature_dist, gain = self.max_gain(example_set, num_examples, feature_set)
+            # Used to print tree structure
+            #print(' |   '*depth + best_feature.name + ' (' + str(num_examples) + ' examples, gain='+ str("%.4f" % gain) + ')')
             node = DTreeNode(best_feature, None)
             feature_subset = list(feature_set)
             lower_bound = NEG_INFINITY
