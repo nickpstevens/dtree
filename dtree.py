@@ -303,8 +303,8 @@ class DTreeNode(object):
 
 def main():
     options = sys.argv[1:]
-
-    assert len(options) >= 1
+    num_options = len(options)
+    assert num_options >= 1
     file_base = options[0]
     example_set = parse_c45(file_base)
     schema = example_set.schema
@@ -314,11 +314,11 @@ def main():
     max_depth = 0  # Max depth of tree. Nonnegative integer. If zero, grow full tree.
     ig_option = 0  # If 0, use information gain as split critereon. If 1, use gain ratio.
 
-    if len(options) >= 2:
+    if num_options >= 2:
         cv_option = (1 if options[1] == '1' else 0)
-    if len(options) >= 3:
+    if num_options >= 3:
         max_depth = (int(options[2]) if int(options[2]) > 0 else 0)
-    if len(options) >= 4:
+    if num_options >= 4:
         ig_option = (1 if options[3] == '1' else 0)
 
     if cv_option == 0:
